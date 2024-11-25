@@ -40,8 +40,9 @@ getChampionStat <- function(champion, patch = NULL, intervalDate = NULL) {
     mutate(Loss = as.numeric(Loss),
            Win = as.numeric(Win),
            n_games = Loss + Win) %>%
-    select(-Loss) %>%
+    select(Player, n_games, Win) %>%
     arrange(desc(Win))
+  colnames(table_player) <- c('Jogador', '# Jogos', '# Vitórias')
   
   return(list(n_pick = n_pick,
               porc_pick = porc_pick,

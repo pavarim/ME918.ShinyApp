@@ -68,15 +68,20 @@ getTeamStat <- function(team, patch = NULL, intervalDate = NULL) {
     distinct() %>%
     arrange(desc(n))
   
+  colnames(result$table_pick) <- c('Pick', '# Jogos', '# Vitórias')
+  
   result$table_ban <- db %>%
     group_by(Ban) %>%
     summarise(n_ban = n()) %>%
     arrange(desc(n_ban))
   
+  colnames(result$table_ban) <- c('Banimento time', '# Banimento')
+  
   result$table_opponent_ban <- db %>%
   group_by(`Ban Opponent`) %>%
     summarise(n_ban = n()) %>%
     arrange(desc(n_ban))
+  colnames(result$table_opponent_ban) <- c('Banimento oponente', '# Banimento')
   
   return(result)
 }

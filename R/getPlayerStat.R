@@ -32,5 +32,7 @@ getPlayerStat <- function(player, patch = NULL, intervalDate = NULL) {
     distinct() %>%
     arrange(desc(n))
   
+  colnames(result$table_champion) <- c('Campeão', '# Jogos', '# Vitórias')
+  
   return(result)
 }
