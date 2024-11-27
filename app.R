@@ -209,27 +209,27 @@ server <- function(input, output) {
   })
   
   output$champion_card_pick_ban <- renderText({
-    if(is.list(champStat())) glue('# picks: {champStat()$n_pick} 
-                                  # bans: {champStat()$n_ban} 
-                                  Winrate: {round(champStat()$winrate, 2)} 
+    if(is.list(champStat())) glue('# picks: {champStat()$n_pick} |
+                                  # bans: {champStat()$n_ban} |
+                                  Winrate: {round(champStat()$winrate, 2)} |
                                   Banrate: {round(champStat()$banrate, 2)}')
   })
   
   output$champion_card_kda <- renderText({
-    if(is.list(champStat())) glue('Abates: {round(champStat()$mean_kills, 2)} 
-                                  Mortes: {round(champStat()$mean_deaths, 2)}
+    if(is.list(champStat())) glue('Abates: {round(champStat()$mean_kills, 2)} |
+                                  Mortes: {round(champStat()$mean_deaths, 2)} |
                                   Assistências: {round(champStat()$mean_assists, 2)}')
   })
   
   output$champion_card_spm <- renderText({
-    if(is.list(champStat())) glue('CSM: {round(champStat()$mean_csm, 2)} 
-                                  GPM: {round(champStat()$mean_deaths, 2)}
+    if(is.list(champStat())) glue('CSM: {round(champStat()$mean_csm, 2)} |
+                                  GPM: {round(champStat()$mean_deaths, 2)} |
                                   DPM: {round(champStat()$mean_assists, 2)}')
   })
   
   output$champion_card_s15 <- renderText({
-    if(is.list(champStat())) glue('CSD@15: {round(champStat()$mean_csd15, 2)} 
-                                  GD@15: {round(champStat()$mean_gd15, 2)}
+    if(is.list(champStat())) glue('CSD@15: {round(champStat()$mean_csd15, 2)} |
+                                  GD@15: {round(champStat()$mean_gd15, 2)} |
                                   XPD@15: {round(champStat()$mean_xpd15, 2)}')
   })
   
@@ -254,26 +254,26 @@ server <- function(input, output) {
   })
   
   output$team_card_matches <- renderText({
-    if(is.list(teamStat())) glue('# partidas: {teamStat()$n_matches} 
-                                  # vitórias: {teamStat()$n_wins}
-                                  # derrotas: {teamStat()$n_losses}
+    if(is.list(teamStat())) glue('# partidas: {teamStat()$n_matches} |
+                                  # vitórias: {teamStat()$n_wins} |
+                                  # derrotas: {teamStat()$n_losses} |
                                   Winrate: {round(teamStat()$winrate, 2)}')
   })
   
   output$team_card_kda <- renderText({
-    if(is.list(teamStat())) glue('Abates: {round(teamStat()$mean_kills, 2)} 
-                                  Mortes: {round(teamStat()$mean_deaths, 2)}
+    if(is.list(teamStat())) glue('Abates: {round(teamStat()$mean_kills, 2)} |
+                                  Mortes: {round(teamStat()$mean_deaths, 2)} |
                                   Assistências: {round(teamStat()$mean_assists, 2)}')
   })
   
   output$team_card_s15 <- renderText({
-    if(is.list(teamStat())) glue('CSD@15: {round(teamStat()$mean_csd15, 2)} 
-                                  GD@15: {round(teamStat()$mean_gd15, 2)}
+    if(is.list(teamStat())) glue('CSD@15: {round(teamStat()$mean_csd15, 2)} |
+                                  GD@15: {round(teamStat()$mean_gd15, 2)} |
                                   XPD@15: {round(teamStat()$mean_xpd15, 2)}')
   })
   
   output$team_card_obj <- renderText({
-    if(is.list(teamStat())) glue('# Dragão: {round(teamStat()$mean_dragon, 2)} 
+    if(is.list(teamStat())) glue('# Dragão: {round(teamStat()$mean_dragon, 2)} |
                                   # Barão: {round(teamStat()$mean_baron, 2)}')
   })
 
@@ -296,29 +296,29 @@ server <- function(input, output) {
   playerStat <- reactive({getPlayerStat(input$player, input$match_patch, interval(start = input$match_date[1], end = input$match_date[2]))})
   
   output$player_card_matches <- renderText({
-    if(is.list(playerStat())) glue('# partidas: {playerStat()$n_matches} 
-                                  # vitórias: {playerStat()$n_wins}
-                                  # derrotas: {playerStat()$n_losses}
+    if(is.list(playerStat())) glue('# partidas: {playerStat()$n_matches} | 
+                                  # vitórias: {playerStat()$n_wins} |
+                                  # derrotas: {playerStat()$n_losses} |
                                   Winrate: {round(playerStat()$winrate, 2)}')
   })
   
   output$player_card_kda <- renderText({
-    if(is.list(playerStat())) glue('Abates: {round(playerStat()$mean_kills, 2)} 
-                                  Mortes: {round(playerStat()$mean_deaths, 2)}
+    if(is.list(playerStat())) glue('Abates: {round(playerStat()$mean_kills, 2)} |
+                                  Mortes: {round(playerStat()$mean_deaths, 2)} |
                                   Assistências: {round(playerStat()$mean_assists, 2)}')
   })
   
   
   
   output$player_card_spm <- renderText({
-    if(is.list(playerStat())) glue('CSM: {round(playerStat()$mean_csm, 2)} 
-                                  GPM: {round(playerStat()$mean_deaths, 2)}
+    if(is.list(playerStat())) glue('CSM: {round(playerStat()$mean_csm, 2)} |
+                                  GPM: {round(playerStat()$mean_deaths, 2)} |
                                   DPM: {round(playerStat()$mean_assists, 2)}')
   })
   
   output$player_card_s15 <- renderText({
-    if(is.list(playerStat())) glue('CSD@15: {round(playerStat()$mean_csd15, 2)} 
-                                  GD@15: {round(playerStat()$mean_gd15, 2)}
+    if(is.list(playerStat())) glue('CSD@15: {round(playerStat()$mean_csd15, 2)} |
+                                  GD@15: {round(playerStat()$mean_gd15, 2)} |
                                   XPD@15: {round(playerStat()$mean_xpd15, 2)}')
   })
   
