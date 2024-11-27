@@ -18,6 +18,7 @@ getChampionStat <- function(champion, patch = NULL, intervalDate = NULL) {
   n_wins <- db %>% filter(Outcome == 'Win') %>% nrow(.)
   n_losses <- db %>% filter(Outcome == 'Loss') %>% nrow(.)
   winrate <- n_wins / n_pick
+  banrate <- n_ban / n_matches_season
   
   mean_kills <- mean(db$Kills)
   mean_deaths <- mean(db$Deaths)
@@ -47,8 +48,10 @@ getChampionStat <- function(champion, patch = NULL, intervalDate = NULL) {
   return(list(n_pick = n_pick,
               porc_pick = porc_pick,
               n_wins = n_wins,
+              n_ban = n_ban,
               n_losses = n_losses,
               winrate = winrate,
+              banrate = banrate,
               mean_kills = mean_kills,
               mean_deaths = mean_deaths,
               mean_assists = mean_assists,
