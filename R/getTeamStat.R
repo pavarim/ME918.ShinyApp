@@ -81,13 +81,13 @@ getTeamStat <- function(team, patch = NULL, intervalDate = NULL) {
   
   for(champ in all_champs) {
     if(!(champ %in% temp_table_pick$Pick)) {
-      temp_table_pick <<- rbind(temp_table_pick, c(champ, 0, 0))
+      temp_table_pick <- rbind(temp_table_pick, list(champ, 0, 0))
     }
     if(!(champ %in% temp_table_ban$Ban)) {
-      temp_table_ban <<- rbind(temp_table_ban, c(champ, 0))
+      temp_table_ban <- rbind(temp_table_ban, list(champ, 0))
     }
     if(!(champ %in% temp_table_opponent_ban$`Ban Opponent`)) {
-      temp_table_opponent_ban <<- rbind(temp_table_opponent_ban, c(champ, 0))
+      temp_table_opponent_ban <- rbind(temp_table_opponent_ban, list(champ, 0))
     }
     
   }

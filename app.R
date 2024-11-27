@@ -278,6 +278,7 @@ server <- function(input, output) {
   })
 
   output$table_team_champions <- renderDataTable({
+
     if(is.list(teamStat())) teamStat()$table_champions
   })
   
