@@ -36,9 +36,8 @@ A partir dos filtros são retornadas as seguintes informações:
 - Número de derrotas;
 - Taxa de partidas ganhas;
 - Valores médios de abates, mortes, assistências, diferença de CS aos 15 minutos de jogo (CSD\@15), diferença de ouro aos 15 minutos de jogo (GD\@15), diferença de XP aos 15 minutos de jogo (XPD\@15) e objetivos;
-- Tabela contendo o campeão escolhido, o número de jogos e de vitórias;
-- Tabela contendo o nome do campeão banido no time e o número de banimentos;
-- Tabela contendo o nome do campeão banido no time adversário e o número de banimentos;
+- Tabela contendo o campeão escolhido, o número de jogos e de vitórias, o número de
+  banimentos e o número de banimentos do time adversário. É possível fazer seu download através do botão `Baixar Tabela de Campeões do Time`.
 
 ## Jogador
 

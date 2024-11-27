@@ -54,8 +54,10 @@ A partir dos filtros são retornadas as seguintes informações:
 - Valores médios de abates, mortes, assistências, diferença de CS aos 15
   minutos de jogo (CSD@15), diferença de ouro aos 15 minutos de jogo
   (GD@15), diferença de XP aos 15 minutos de jogo (XPD@15) e objetivos;
-- Tabela contendo o campeão escolhido, o número de jogos e de vitórias, o número de
-  banimentos e o número de banimentos do time adversário;
+- Tabela contendo o campeão escolhido, o número de jogos e de vitórias,
+  o número de banimentos e o número de banimentos do time adversário. É
+  possível fazer seu download através do botão
+  `Baixar Tabela de Campeões do Time`.
 
 ## Jogador
 
