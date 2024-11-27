@@ -17,7 +17,7 @@ getTeamStat <- function(team, patch = NULL, intervalDate = NULL) {
   result$n_matches <- n_matches_team$n_matches[n_matches_team$Team == team]
   result$n_wins <- sum(db$Outcome == 'Win') / 5
   result$winrate <- result$n_wins / result$n_matches
-  result$losses <- result$n_matches - result$n_wins
+  result$n_losses <- result$n_matches - result$n_wins
   
   result$mean_kills <- mean(db$`Kills Team`)
   result$mean_deaths <- db %>% group_by(Date, `No Game`) %>%
@@ -31,17 +31,17 @@ getTeamStat <- function(team, patch = NULL, intervalDate = NULL) {
     summarise(mean = mean(assists)) %>%
     as.numeric()
   
-  result$xpd15 <- db %>% group_by(Date, `No Game`) %>%
+  result$mean_xpd15 <- db %>% group_by(Date, `No Game`) %>%
     summarise(xpd15 = sum(`XPD@15`)) %>%
     ungroup() %>%
     summarise(mean = mean(xpd15)) %>%
     as.numeric()
-  result$gd15 <- db %>% group_by(Date, `No Game`) %>%
+  result$mean_gd15 <- db %>% group_by(Date, `No Game`) %>%
     summarise(gd15 = sum(`GD@15`)) %>%
     ungroup() %>%
     summarise(mean = mean(gd15)) %>%
     as.numeric()
-  result$csd15 <- db %>% group_by(Date, `No Game`) %>%
+  result$mean_csd15 <- db %>% group_by(Date, `No Game`) %>%
     summarise(csd15 = sum(`CSD@15`)) %>%
     ungroup() %>%
     summarise(mean = mean(csd15)) %>%

@@ -12,9 +12,14 @@ getPlayerStat <- function(player, patch = NULL, intervalDate = NULL) {
   
   result$table_role <- db %>% group_by(Role) %>% summarise(n = n())
   
+  result$n_matches <- nrow(db)
+  result$n_wins <- db %>% filter(Outcome == 'Win') %>% nrow()
+  result$n_losses <- result$n_matches - result$n_wins
+  result$winrate <- result$n_wins / result$n_matches
+  
   result$mean_kills <- mean(db$Kills)
   result$mean_deaths <- mean(db$Deaths)
-  mean_assists <- mean(db$Assists)
+  result$mean_assists <- mean(db$Assists)
   
   result$mean_csm <- mean(as.numeric(db$CSM))
   result$mean_dpm <- mean(db$DPM)
