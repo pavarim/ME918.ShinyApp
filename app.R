@@ -120,9 +120,8 @@ ui <- page_sidebar(
                          )
                          
                        ),
-                       dataTableOutput(outputId = 'table_team_pick'),
-                       dataTableOutput(outputId = 'table_team_ban'),
-                       dataTableOutput(outputId = 'table_opponent_ban')
+                       dataTableOutput(outputId = 'table_team_champions'),
+                       downloadButton('download_team_champion', 'Baixar Tabela de Campeões do Time')
               ),
               tabPanel('Jogador',
                        value = 'tab_player',
@@ -278,17 +277,20 @@ server <- function(input, output) {
                                   # Barão: {round(teamStat()$mean_baron, 2)}')
   })
 
-  output$table_team_pick <- renderDataTable({
-    if(is.list(teamStat())) teamStat()$table_pick
+  output$table_team_champions <- renderDataTable({
+    if(is.list(teamStat())) teamStat()$table_champions
   })
   
-  output$table_team_ban <- renderDataTable({
-    if(is.list(teamStat())) teamStat()$table_ban
-  })
-  
-  output$table_opponent_ban <- renderDataTable({
-    if(is.list(teamStat())) teamStat()$table_opponent_ban
-  })
+  output$download_team_champion <- downloadHandler(
+    filename = function() {
+      paste("tabela_team_champion_", Sys.Date(), ".csv", sep = "")
+    },
+    content = function(file) {
+      if(is.list(playerStat())) {
+        write.csv(playerStat()$table_champion, file, row.names = FALSE)
+      }
+    }
+  )
   
   #--- Player tab ---#
   playerStat <- reactive({getPlayerStat(input$player, input$match_patch, interval(start = input$match_date[1], end = input$match_date[2]))})

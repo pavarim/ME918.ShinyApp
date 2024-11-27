@@ -2,7 +2,6 @@ getTeamStat <- function(team, patch = NULL, intervalDate = NULL) {
   if(!is.null(patch)) db <- db %>% filter(Patch %in% patch)
   if(!is.null(intervalDate)) db <- db %>% filter(Date %within% intervalDate)
 
-  
   db <- db %>% filter(Team == team)
   
   if(nrow(db) == 0) { # retorna 0 se o filtro removeu todas as linhas
@@ -60,28 +59,48 @@ getTeamStat <- function(team, patch = NULL, intervalDate = NULL) {
     summarise(mean = mean(baron)) %>%
     as.numeric()
   
-  result$table_pick <- db %>%
+  temp_table_pick <- db %>%
     mutate(n = n(),
            n_win = sum(Outcome == 'Win'),
            .by = Pick) %>%
     select(Pick, n, n_win) %>%
-    distinct() %>%
+    distinct()
+  
+  
+  temp_table_ban <- db %>%
+    group_by(Ban) %>%
+    summarise(n_ban = n())
+  
+  temp_table_opponent_ban <- db %>%
+  group_by(`Ban Opponent`) %>%
+    summarise(n_opp_ban = n())
+  
+  all_champs <- c(temp_table_pick$Pick,
+                  temp_table_ban$Ban,
+                  temp_table_opponent_ban$`Ban Opponent`)
+  
+  for(champ in all_champs) {
+    if(!(champ %in% temp_table_pick$Pick)) {
+      temp_table_pick <<- rbind(temp_table_pick, c(champ, 0, 0))
+    }
+    if(!(champ %in% temp_table_ban$Ban)) {
+      temp_table_ban <<- rbind(temp_table_ban, c(champ, 0))
+    }
+    if(!(champ %in% temp_table_opponent_ban$`Ban Opponent`)) {
+      temp_table_opponent_ban <<- rbind(temp_table_opponent_ban, c(champ, 0))
+    }
+    
+  }
+  
+  result$table_champions <- inner_join(temp_table_pick,
+             temp_table_ban,
+             by = join_by(Pick == Ban)) %>%
+    inner_join(.,
+               temp_table_opponent_ban,
+               by = join_by(Pick == `Ban Opponent`)) %>%
     arrange(desc(n))
   
-  colnames(result$table_pick) <- c('Pick', '# Jogos', '# Vitórias')
-  
-  result$table_ban <- db %>%
-    group_by(Ban) %>%
-    summarise(n_ban = n()) %>%
-    arrange(desc(n_ban))
-  
-  colnames(result$table_ban) <- c('Banimento time', '# Banimento')
-  
-  result$table_opponent_ban <- db %>%
-  group_by(`Ban Opponent`) %>%
-    summarise(n_ban = n()) %>%
-    arrange(desc(n_ban))
-  colnames(result$table_opponent_ban) <- c('Banimento oponente', '# Banimento')
+  colnames(result$table_champions) <- c('Champion', '# Pick', '# Vitórias', '# Banimentos', '# Banimentos do oponente')
   
   return(result)
 }
