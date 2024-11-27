@@ -1,6 +1,8 @@
 
 # ShinyLol
 
+Enzo Putton Tortelli, Eric Pavarim Lima, Mariana Peres Nascimento, Rodrigo Caldiron 
+
 ## Introdução
 
 A aplicação em shiny ShinyLol tem o objetivo de trazer estatísticas
