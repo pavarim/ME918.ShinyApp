@@ -287,8 +287,8 @@ server <- function(input, output) {
       paste("tabela_team_champion_", Sys.Date(), ".csv", sep = "")
     },
     content = function(file) {
-      if(is.list(playerStat())) {
-        write.csv(playerStat()$table_champion, file, row.names = FALSE)
+      if(is.list(teamStat())) {
+        write.csv(teamStat()$table_champions, file, row.names = FALSE)
       }
     }
   )
