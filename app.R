@@ -78,7 +78,8 @@ ui <- page_sidebar(
                          )
                          
                        ),
-                       dataTableOutput(outputId = 'table_champ_player')
+                       dataTableOutput(outputId = 'table_champ_player'),
+                       downloadButton('download_champion', 'Baixar Tabela de Campeão')
               ),
               tabPanel('Time',
                        value = 'tab_team',
@@ -155,7 +156,8 @@ ui <- page_sidebar(
                          )
                          
                        ),
-                       dataTableOutput(outputId = 'table_player_champion')
+                       dataTableOutput(outputId = 'table_player_champion'),
+                       downloadButton('download_player_champion', 'Baixar Tabela de Jogador')
               )
   ),
   useShinyjs()
@@ -231,6 +233,17 @@ server <- function(input, output) {
                                   GD@15: {round(champStat()$mean_gd15, 2)}
                                   XPD@15: {round(champStat()$mean_xpd15, 2)}')
   })
+  
+  output$download_champion <- downloadHandler(
+    filename = function() {
+      paste("tabela_campeao_", Sys.Date(), ".csv", sep = "")
+    },
+    content = function(file) {
+      if(is.list(champStat())) {
+        write.csv(champStat()$table_player, file, row.names = FALSE)
+      }
+    }
+  )
   
   
   
@@ -315,6 +328,17 @@ server <- function(input, output) {
   output$table_player_champion <- renderDataTable({
     if(is.list(playerStat())) playerStat()$table_champion
   })
+  
+  output$download_player_champion <- downloadHandler(
+    filename = function() {
+      paste("tabela_player_champion_", Sys.Date(), ".csv", sep = "")
+    },
+    content = function(file) {
+      if(is.list(playerStat())) {
+        write.csv(playerStat()$table_champion, file, row.names = FALSE)
+      }
+    }
+  )
   
 }
 
