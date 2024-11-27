@@ -51,11 +51,29 @@ ui <- page_sidebar(
                        fluidRow(
                          column(5,
                                 card(
-                                  card_body(textOutput(outputId = 'n_champion_pick'))) 
+                                  card_body(markdown(textOutput(outputId = 'champion_card_pick_ban'))))
                                 ),
                          column(5,
                                 card(
-                                  card_body(markdown('### Pick: 5')))
+                                  card_header('Médias'),
+                                  card_body(
+                                    textOutput(outputId = 'champion_card_kda')
+                                  ))
+                         )
+                         
+                       ),
+                       fluidRow(
+                         column(5,
+                                card(
+                                  card_header('Médias'),
+                                  card_body(textOutput(outputId = 'champion_card_spm'))) 
+                         ),
+                         column(5,
+                                card(
+                                  card_body(
+                                    card_header('Médias'),
+                                    textOutput(outputId = 'champion_card_s15')
+                                  ))
                          )
                          
                        ),
@@ -121,9 +139,34 @@ server <- function(input, output) {
     if(is.list(champStat())) champStat()$table_player
   })
   
-  output$n_champion_pick <- renderText({
-    if(is.list(champStat())) glue('Número de jogos: {champStat()$n_pick}')
+  output$champion_card_pick_ban <- renderText({
+    if(is.list(champStat())) glue('Número de picks: {champStat()$n_pick} 
+                                  Número de bans: {champStat()$n_ban} 
+                                  Winrate: {round(champStat()$winrate, 2)} 
+                                  Banrate: {round(champStat()$banrate, 2)}')
   })
+  
+  output$champion_card_kda <- renderText({
+    if(is.list(champStat())) glue('Abates: {round(champStat()$mean_kills, 2)} 
+                                  Mortes: {round(champStat()$mean_deaths, 2)}
+                                  Assistências: {round(champStat()$mean_assists, 2)}')
+  })
+  
+  output$champion_card_spm <- renderText({
+    if(is.list(champStat())) glue('CSM: {round(champStat()$mean_dpm, 2)} 
+                                  GPM: {round(champStat()$mean_deaths, 2)}
+                                  DPM: {round(champStat()$mean_assists, 2)}')
+  })
+  
+  output$champion_card_s15 <- renderText({
+    if(is.list(champStat())) glue('CSD@15: {round(champStat()$mean_csd15, 2)} 
+                                  GD@15: {round(champStat()$mean_gd15, 2)}
+                                  XPD@15: {round(champStat()$mean_xpd15, 2)}')
+  })
+  
+  
+  
+  
   
   #--- Team tab ---#
   teamStat <- reactive({getTeamStat(input$team, input$match_patch, interval(start = input$match_date[1], end = input$match_date[2]))})
